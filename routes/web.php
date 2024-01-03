@@ -1,18 +1,11 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NumberGeneratorController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/result/{token}', [HomeController::class, 'result'])->name('result');
+Route::get('/numbers', [HomeController::class, 'numbers'])->name('numbers.index');
+Route::get('/generator/get/numbers/sequence/integer', [NumberGeneratorController::class, 'getIntegerSequence'])->name('generator.get.numbers.sequence.integer');
