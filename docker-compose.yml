@@ -1,0 +1,41 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: random_stuff
+        uid: 1000
+      context: .
+      dockerfile: Dockerfile
+    image: random_stuff
+    container_name: random_stuff_app
+    restart: unless-stopped
+    working_dir: "/var/www/"
+    volumes:
+      - "./:/var/www"
+      - "./docker-compose/supervisor.conf:/etc/supervisord.conf"
+    networks:
+      - random_stuff_net
+  redis:
+    container_name: random_stuff_redis
+    image: redis:7
+    restart: unless-stopped
+    volumes:
+      - "redis_data_volume:/data"
+    networks:
+      - random_stuff_net
+  nginx:
+    image: nginx:stable
+    container_name: random_stuff_nginx
+    restart: unless-stopped
+    ports:
+      - "8004:80"
+    volumes:
+      - "./:/var/www"
+      - "./docker-compose/nginx.conf:/etc/nginx/conf.d/nginx.conf"
+    networks:
+      - random_stuff_net
+networks:
+  random_stuff_net:
+volumes:
+  redis_data_volume:
