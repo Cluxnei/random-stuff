@@ -25,6 +25,7 @@ class BufferService
     final public function getFromRawBuffer(?int $size = null): array
     {
         $buffer = $this->getCacheInterface()->get(self::buffer_key, []);
+        $buffer = $this->preventEmptyBuffer($buffer);
         if ($size === null) {
             return $buffer;
         }
@@ -48,5 +49,20 @@ class BufferService
     private function getCacheInterface(): CacheManager
     {
         return cache();
+    }
+
+    private function preventEmptyBuffer(array $buffer): array
+    {
+        if (count($buffer) > 0) {
+            return $buffer;
+        }
+        for ($i = 0; $i < self::buffer_size; $i++) {
+            $num = mt_rand() / mt_getrandmax();
+            if (mt_rand(1, 10) % 2 === 0) {
+                $num = -$num;
+            }
+            $buffer[] = $num;
+        }
+        return $buffer;
     }
 }
