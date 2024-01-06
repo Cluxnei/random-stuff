@@ -3,18 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Result;
+use App\Services\RandomService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Psr\SimpleCache\InvalidArgumentException;
 
 class NumberGeneratorController extends Controller
 {
+    public function __construct(
+        private readonly RandomService $randomService
+    )
+    {
+        //
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
     final public function getIntegerSequence(): RedirectResponse
     {
-        $size = 10000;
-        $sequence = [];
-        for ($i = 0; $i < $size; $i++) {
-            $sequence[] = rand(-PHP_INT_MAX, PHP_INT_MAX);
-        }
+        $sequence = $this->randomService->generateRandomIntegerSequence(50);
         $sequence = implode(', ', $sequence);
         return Result::resultPage($sequence);
     }

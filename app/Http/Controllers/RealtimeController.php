@@ -13,11 +13,12 @@ class RealtimeController extends Controller
         private readonly BufferService $bufferService
     )
     {
+        //
     }
 
     final public function index(): Renderable
     {
-        $buffer = $this->bufferService->getFromBuffer(BufferService::buffer_realtime_size);
+        $buffer = $this->bufferService->getFromRawBuffer(BufferService::buffer_realtime_size);
         return view('realtime', compact('buffer'));
     }
 }

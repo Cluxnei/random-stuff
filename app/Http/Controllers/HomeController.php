@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 
@@ -36,11 +37,15 @@ class HomeController extends Controller
 
     final public function result(string $token): Renderable | RedirectResponse {
         $key = "result:{$token}";
-        if (!session()->has($key)) {
+        /**
+         * @var Repository $cache
+         */
+        $cache = cache();
+        $result = $cache->get($key);
+        if (!$result) {
             return redirect()->route('home')
                 ->with('info', 'Result expired, generate new one...');
         }
-        $result = session($key);
         return view('result', compact('result'));
     }
 }

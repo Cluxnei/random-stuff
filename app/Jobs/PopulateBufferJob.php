@@ -19,7 +19,7 @@ class PopulateBufferJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
      */
     public function __construct()
     {
-        //
+        // silence is golden
     }
 
     /**
@@ -28,10 +28,14 @@ class PopulateBufferJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
      */
     public function handle(BufferService $bufferService): void
     {
-        $numberToMock = 50;
+        $numberToMock = (int)(BufferService::buffer_size / 3);
         $part = [];
         for ($i = 0; $i < $numberToMock; $i++) {
-            $part[] = mt_rand() / mt_getrandmax();
+            $num = mt_rand() / mt_getrandmax();
+            if (mt_rand(1, 10) % 2 === 0) {
+                $num = -$num;
+            }
+            $part[] = $num;
         }
         $bufferService->pushToBuffer($part);
     }
