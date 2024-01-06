@@ -19,6 +19,11 @@ class HomeController extends Controller
                 'title' => 'Numbers',
                 'description' => 'Generate random number sequences...',
                 'route' => route('numbers.index'),
+            ],
+            [
+                'title' => 'Strings',
+                'description' => 'Generate random string sequences...',
+                'route' => route('strings.index'),
             ]
         ];
         return view('home', compact('cards'));
@@ -48,6 +53,32 @@ class HomeController extends Controller
             ]
         ];
         return view('numbers', compact('cards'));
+    }
+
+    final public function strings(): Renderable {
+        $cards = [
+            [
+                'title' => 'Home',
+                'description' => 'Go back to home...',
+                'route' => route('home'),
+            ],
+            [
+                'title' => 'Char',
+                'description' => 'Generate random char sequence...',
+                'route' => route('generator.get.strings.sequence.char'),
+            ],
+            [
+                'title' => 'Generated Words',
+                'description' => 'Generate random words with chars sequence...',
+                'route' => route('generator.get.strings.sequence.word'),
+            ],
+            [
+                'title' => 'Real words',
+                'description' => 'Generate random real words sequence...',
+                'route' => route('generator.get.strings.sequence.real-word'),
+            ]
+        ];
+        return view('strings', compact('cards'));
     }
 
     final public function result(string $token): Renderable | RedirectResponse {
