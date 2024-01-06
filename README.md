@@ -1,6 +1,9 @@
 # Random Stuff
 
 ### To run on local environment
+Copy content of .env.example to .env
+or run: `cp .enx.example .env`
+
 Run: `docker compose up -d`
 
 On host, follow next instructions:
@@ -15,6 +18,7 @@ If you experience erro at main app container start:
 Ex: "permission denied”, in short, the permission denied error. 
 
 Run: `sudo chmod +x docker-compose/run.sh` on host.
+
 
 [Finally, open localhost on port 8004](http://127.0.0.1:8004)
 
