@@ -26,4 +26,24 @@ class NumberGeneratorController extends Controller
         $sequence = implode(', ', $sequence);
         return Result::resultPage($sequence);
     }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    final public function getDecimalSequence(): RedirectResponse
+    {
+        $sequence = $this->randomService->generateRandomDecimalSequence(50);
+        $sequence = implode(', ', $sequence);
+        return Result::resultPage($sequence);
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
+    final public function getBooleanSequence(): RedirectResponse
+    {
+        $sequence = $this->randomService->generateRandomBooleanSequence(50);
+        $sequence = implode(', ', array_map(static fn(bool $bool) => (int)$bool, $sequence));
+        return Result::resultPage($sequence);
+    }
 }

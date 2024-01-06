@@ -38,6 +38,12 @@ class BufferService
         return array_map(static fn(float $item) => (int)($item * mt_getrandmax()), $buffer);
     }
 
+    final public function getFromBooleanBuffer(?int $size = null): array
+    {
+        $buffer = $this->getFromRawBuffer($size);
+        return array_map(static fn(float $item) => $item > 0.5, $buffer);
+    }
+
     /**
      * @throws InvalidArgumentException
      */

@@ -18,7 +18,14 @@ class RealtimeController extends Controller
 
     final public function index(): Renderable
     {
+        $cards = [
+            [
+                'title' => 'Home',
+                'description' => 'Go back to home...',
+                'route' => route('home'),
+            ],
+        ];
         $buffer = $this->bufferService->getFromRawBuffer(BufferService::buffer_realtime_size);
-        return view('realtime', compact('buffer'));
+        return view('realtime', compact('buffer', 'cards'));
     }
 }
