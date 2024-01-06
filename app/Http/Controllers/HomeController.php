@@ -10,6 +10,11 @@ class HomeController extends Controller
     final public function index(): Renderable {
         $cards = [
             [
+                'title' => 'Realtime Data',
+                'description' => 'Realtime random data...',
+                'route' => route('realtime.index'),
+            ],
+            [
                 'title' => 'Numbers',
                 'description' => 'Generate random number sequences...',
                 'route' => route('numbers.index'),
