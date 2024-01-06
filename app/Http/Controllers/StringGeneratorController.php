@@ -22,7 +22,7 @@ class StringGeneratorController extends Controller
      */
     final public function getCharSequence(): RedirectResponse
     {
-        $sequence = $this->randomService->generateRandomIntegerSequence(50);
+        $sequence = $this->randomService->generateRandomCharSequence(50);
         $sequence = implode(', ', $sequence);
         return Result::resultPage($sequence);
     }
@@ -32,7 +32,7 @@ class StringGeneratorController extends Controller
      */
     final public function getWordSequence(): RedirectResponse
     {
-        $sequence = $this->randomService->generateRandomDecimalSequence(50);
+        $sequence = $this->randomService->generateRandomWordSequence(50);
         $sequence = implode(', ', $sequence);
         return Result::resultPage($sequence);
     }
@@ -42,7 +42,7 @@ class StringGeneratorController extends Controller
      */
     final public function getRealWordSequence(): RedirectResponse
     {
-        $sequence = $this->randomService->generateRandomBooleanSequence(50);
+        $sequence = $this->randomService->generateRandomRealWordSequence(50);
         $sequence = implode(', ', array_map(static fn(bool $bool) => (int)$bool, $sequence));
         return Result::resultPage($sequence);
     }

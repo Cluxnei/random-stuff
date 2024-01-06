@@ -35,13 +35,25 @@ class BufferService
     final public function getFromIntegerBuffer(?int $size = null): array
     {
         $buffer = $this->getFromRawBuffer($size);
-        return array_map(static fn(float $item) => (int)($item * mt_getrandmax()), $buffer);
+        // TODO - evaluate this when real buffer source are implemented
+        return array_map(static fn(float $val) => (int)($val * mt_getrandmax()), $buffer);
+    }
+
+    final public function getFromCharBuffer(?int $size = null, int $ascCodeMin = 33, int $ascCodeMax = 126): array
+    {
+        $buffer = $this->getFromIntegerBuffer($size);
+        $bufferMin = min($buffer);
+        $bufferMax = max($buffer);
+        $shiftInRange = static function (int $min, int $max, int $value) use ($bufferMin, $bufferMax) {
+            return ((($max - $min) * ($value - $bufferMin)) / ($bufferMax - $bufferMin)) + $min;
+        };
+        return array_map(static fn(int $val) => chr($shiftInRange($ascCodeMin, $ascCodeMax, $val)), $buffer);
     }
 
     final public function getFromBooleanBuffer(?int $size = null): array
     {
         $buffer = $this->getFromRawBuffer($size);
-        return array_map(static fn(float $item) => $item > 0.5, $buffer);
+        return array_map(static fn(float $val) => $val > 0.5, $buffer);
     }
 
     /**
