@@ -120,4 +120,5 @@ class PopulateBufferJob implements ShouldQueue, ShouldBeUniqueUntilProcessing
         }
         return $value;
     }
+
 }
