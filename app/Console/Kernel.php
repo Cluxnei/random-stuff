@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->job(PopulateBufferJob::class)
-            ->everyFiveSeconds()
+            ->everyThirtyMinutes()
             ->withoutOverlapping();
     }
 

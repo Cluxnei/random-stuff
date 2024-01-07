@@ -25,7 +25,9 @@ class RealtimeController extends Controller
                 'route' => route('home'),
             ],
         ];
-        $buffer = $this->bufferService->getFromRawBuffer(BufferService::buffer_realtime_size);
+        $buffer = $this->bufferService->getFromRawBuffer();
+        shuffle($buffer);
+        $buffer = array_slice($buffer, 0, BufferService::buffer_realtime_size);
         return view('realtime', compact('buffer', 'cards'));
     }
 }

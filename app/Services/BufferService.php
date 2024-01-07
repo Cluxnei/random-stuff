@@ -10,7 +10,7 @@ class BufferService
 {
     private const buffer_key = 'main_buffer';
     public const buffer_size = 500;
-    public const buffer_realtime_size = self::buffer_size * 0.2;
+    public const buffer_realtime_size = self::buffer_size * 0.4;
 
     /**
      * @throws InvalidArgumentException
