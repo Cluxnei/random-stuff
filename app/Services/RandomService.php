@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Helpers\Operations;
+
 class RandomService
 {
     public function __construct(
@@ -60,6 +62,29 @@ class RandomService
     {
         $buffer = $this->bufferService->getFromIntegerBuffer();
         shuffle($buffer);
-        return array_slice($buffer,  0, $length);
+        $dictionaryWordCount = 370101;
+        $bufferMin = min($buffer);
+        $bufferMax = max($buffer);
+        $hashMap = [];
+        foreach ($buffer as $number) {
+            $wordLineIndex = Operations::intShiftInRange(1, $dictionaryWordCount, $number, $bufferMin, $bufferMax);
+            $hashMap[$wordLineIndex] = true;
+        }
+        $words = [];
+        $lineIndex = 0;
+        $file = fopen(public_path('words_dictionary.txt'), "r");
+        if (!$file) {
+            return $words;
+        }
+        while(!feof($file)) {
+            $line = fgets($file);
+            if ($hashMap[$lineIndex] ?? false) {
+                $words[] = $line;
+            }
+            $lineIndex++;
+        }
+        fclose($file);
+        shuffle($words);
+        return array_slice($words, 0, $length);
     }
 }

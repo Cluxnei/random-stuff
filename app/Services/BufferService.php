@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\Operations;
 use Illuminate\Cache\CacheManager;
 use Psr\SimpleCache\InvalidArgumentException;
 
@@ -44,10 +45,9 @@ class BufferService
         $buffer = $this->getFromIntegerBuffer($size);
         $bufferMin = min($buffer);
         $bufferMax = max($buffer);
-        $shiftInRange = static function (int $min, int $max, int $value) use ($bufferMin, $bufferMax) {
-            return ((($max - $min) * ($value - $bufferMin)) / ($bufferMax - $bufferMin)) + $min;
-        };
-        return array_map(static fn(int $val) => chr($shiftInRange($ascCodeMin, $ascCodeMax, $val)), $buffer);
+        return array_map(static function (int $val) use ($ascCodeMin, $ascCodeMax, $bufferMin, $bufferMax) {
+            return chr(Operations::intShiftInRange($ascCodeMin, $ascCodeMax, $val, $bufferMin, $bufferMax));
+        }, $buffer);
     }
 
     final public function getFromBooleanBuffer(?int $size = null): array

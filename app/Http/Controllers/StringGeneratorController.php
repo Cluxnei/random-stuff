@@ -43,7 +43,7 @@ class StringGeneratorController extends Controller
     final public function getRealWordSequence(): RedirectResponse
     {
         $sequence = $this->randomService->generateRandomRealWordSequence(50);
-        $sequence = implode(', ', array_map(static fn(bool $bool) => (int)$bool, $sequence));
+        $sequence = implode(', ', $sequence);
         return Result::resultPage($sequence);
     }
 }
